@@ -1,15 +1,14 @@
 package com.phillipilino.concatadapterexample.viewHolders
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.View
 import com.phillipilino.concatadapterexample.BaseVH
 import com.phillipilino.concatadapterexample.R
-import com.phillipilino.concatadapterexample.setVisible
+import com.phillipilino.concatadapterexample.helpers.getColorHelper
+import com.phillipilino.concatadapterexample.helpers.setVisible
+import com.phillipilino.concatadapterexample.helpers.toCurrency
+import com.phillipilino.concatadapterexample.models.TransferItem
 import kotlinx.android.synthetic.main.layout_item_transfer.view.*
-import java.text.NumberFormat
-import java.util.*
 
 class ItemTransferVH(private val context: Context, view: View) : BaseVH<TransferItem>(view) {
     override fun bind(item: TransferItem, position: Int, onItemPressed: ((View, TransferItem, Int) -> Unit)?) {
@@ -31,25 +30,4 @@ class ItemTransferVH(private val context: Context, view: View) : BaseVH<Transfer
 
         view.txt_description.setVisible(item.description.isNotEmpty())
     }
-}
-
-data class TransferItem(
-    val date: String,
-    val title: String,
-    val description: String,
-    val value: Double,
-)
-
-fun Context.getColorHelper(id: Int): Int =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) resources.getColor(id, null)
-    else resources.getColor(id)
-
-fun Context.getDrawableHelper(id: Int): Drawable =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) resources.getDrawable(id, null)
-    else resources.getDrawable(id)
-
-fun Double.toCurrency(language: String = "pt", country: String = "BR"): String {
-    val formatter = NumberFormat.getCurrencyInstance(Locale(language, country))
-    val currencySymbol = formatter.currency?.symbol ?: "R$"
-    return formatter.format(this).replace(currencySymbol, " $currencySymbol ")
 }

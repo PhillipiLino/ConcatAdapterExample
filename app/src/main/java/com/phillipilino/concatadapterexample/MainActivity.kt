@@ -8,9 +8,9 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
 import com.phillipilino.concatadapterexample.adapters.*
-import com.phillipilino.concatadapterexample.viewHolders.BalanceItem
-import com.phillipilino.concatadapterexample.viewHolders.FinancesItem
-import com.phillipilino.concatadapterexample.viewHolders.TransferItem
+import com.phillipilino.concatadapterexample.models.BalanceItem
+import com.phillipilino.concatadapterexample.models.FinancesItem
+import com.phillipilino.concatadapterexample.models.TransferItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,28 +30,96 @@ class MainActivity : AppCompatActivity() {
         recycler.adapter = concatAdapter
 
         val balance = listOf(
-            BalanceItem("Saldo Disponível", 2350324324.12),
-            BalanceItem("Saldo anterior", 2350.12),
-            BalanceItem("Saldo atual", 2350.12),
-            BalanceItem("Limite (+)", 2350.12),
-            BalanceItem("Saldo bloqueado (-)", 2350.12),
-            BalanceItem("Valor bloqueado (-)", 2350.12),
+            BalanceItem(
+                "Saldo Disponível",
+                2350324324.12
+            ),
+            BalanceItem(
+                "Saldo anterior",
+                2350.12
+            ),
+            BalanceItem(
+                "Saldo atual",
+                2350.12
+            ),
+            BalanceItem(
+                "Limite (+)",
+                2350.12
+            ),
+            BalanceItem(
+                "Saldo bloqueado (-)",
+                2350.12
+            ),
+            BalanceItem(
+                "Valor bloqueado (-)",
+                2350.12
+            ),
         )
 
         val finances = listOf(
-            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 2350.12),
-            FinancesItem("18/04/1995", "Fundos", "Resgate Parcial", 23501.12),
-            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 2350323.12),
-            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 23502.12)
+            FinancesItem(
+                "18/04/1995",
+                "Fundos",
+                "Resgate Total",
+                2350.12
+            ),
+            FinancesItem(
+                "18/04/1995",
+                "Fundos",
+                "Resgate Parcial",
+                23501.12
+            ),
+            FinancesItem(
+                "18/04/1995",
+                "Fundos",
+                "Resgate Total",
+                2350323.12
+            ),
+            FinancesItem(
+                "18/04/1995",
+                "Fundos",
+                "Resgate Total",
+                23502.12
+            )
         )
 
         val transfers = listOf(
-            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", 128.99),
-            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", 128121.99),
-            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "", -1243.99),
-            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", -12328.99),
-            TransferItem("18/04/1995", "TRANSF. MESMA", "", 12318.99),
-            TransferItem("18/04/1995", "TRANSF. MESMA", "Informações do TED D", -12238.99)
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA TITULARIADADE",
+                "Informações do TED D",
+                128.99
+            ),
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA TITULARIADADE",
+                "Informações do TED D",
+                128121.99
+            ),
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA TITULARIADADE",
+                "",
+                -1243.99
+            ),
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA TITULARIADADE",
+                "Informações do TED D",
+                -12328.99
+            ),
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA",
+                "",
+                12318.99
+            ),
+            TransferItem(
+                "18/04/1995",
+                "TRANSF. MESMA",
+                "Informações do TED D",
+                -12238.99
+            )
         )
 
         val buttons = listOf(
@@ -71,8 +139,4 @@ class MainActivity : AppCompatActivity() {
             Log.d("BTN_CLICKED", title)
         }
     }
-}
-
-fun View.setVisible(visible: Boolean = true) {
-    visibility = if (visible) VISIBLE else GONE
 }

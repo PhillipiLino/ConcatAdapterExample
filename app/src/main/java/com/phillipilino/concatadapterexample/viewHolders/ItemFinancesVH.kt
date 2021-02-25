@@ -2,7 +2,9 @@ package com.phillipilino.concatadapterexample.viewHolders
 
 import android.view.View
 import com.phillipilino.concatadapterexample.BaseVH
-import com.phillipilino.concatadapterexample.setVisible
+import com.phillipilino.concatadapterexample.helpers.setVisible
+import com.phillipilino.concatadapterexample.helpers.toCurrency
+import com.phillipilino.concatadapterexample.models.FinancesItem
 import kotlinx.android.synthetic.main.layout_item_finances.view.*
 
 class ItemFinancesVH(view: View) : BaseVH<FinancesItem>(view) {
@@ -16,10 +18,3 @@ class ItemFinancesVH(view: View) : BaseVH<FinancesItem>(view) {
         view.txt_value.text = item.value.toCurrency()
     }
 }
-
-data class FinancesItem(
-    val date: String,
-    val type: String,
-    val description: String,
-    val value: Double,
-)

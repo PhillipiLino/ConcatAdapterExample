@@ -2,7 +2,7 @@ package com.phillipilino.concatadapterexample.viewHolders
 
 import android.view.View
 import com.phillipilino.concatadapterexample.BaseVH
-import com.phillipilino.concatadapterexample.setVisible
+import com.phillipilino.concatadapterexample.helpers.setVisible
 import kotlinx.android.synthetic.main.layout_item_button.view.*
 
 class ItemButtonVH(view: View) : BaseVH<String>(view) {

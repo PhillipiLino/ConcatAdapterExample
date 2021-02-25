@@ -3,7 +3,7 @@ package com.phillipilino.concatadapterexample.adapters
 import android.view.View
 import com.phillipilino.concatadapterexample.BaseAdapter
 import com.phillipilino.concatadapterexample.R
-import com.phillipilino.concatadapterexample.viewHolders.BalanceItem
+import com.phillipilino.concatadapterexample.models.BalanceItem
 import com.phillipilino.concatadapterexample.viewHolders.ItemBalanceVH
 
 class ItemBalanceAdapter: BaseAdapter<BalanceItem>() {
