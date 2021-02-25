@@ -1,4 +1,4 @@
-package com.phillipilino.basehelpers.adapters
+package com.phillipilino.concatadapterexample
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

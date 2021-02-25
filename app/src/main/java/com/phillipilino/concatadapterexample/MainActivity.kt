@@ -1,70 +1,78 @@
 package com.phillipilino.concatadapterexample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ConcatAdapter
-import com.phillipilino.basehelpers.adapters.BaseAdapter
-import com.phillipilino.basehelpers.adapters.BaseVH
+import com.phillipilino.concatadapterexample.adapters.*
+import com.phillipilino.concatadapterexample.viewHolders.BalanceItem
+import com.phillipilino.concatadapterexample.viewHolders.FinancesItem
+import com.phillipilino.concatadapterexample.viewHolders.TransferItem
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_item_one.view.*
-import kotlinx.android.synthetic.main.layout_item_one.view.txt_info
-import kotlinx.android.synthetic.main.layout_item_two.view.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapterOne = ItemOneAdapter()
-        val adapterTwo = ItemTwoAdapter()
-        val adapterThree = ItemThreeAdapter()
+        val adapterTop = ItemFinancesTopAdapter()
+        val adapterBalance = ItemBalanceAdapter()
+        val adapterFinances = ItemFinancesAdapter()
+        val adapterTransfers = ItemTransferAdapter(this)
+        val adapterDescription = ItemDescriptionAdapter()
+        val adapterButton = ItemButtonAdapter()
 
-        val concatAdapter = ConcatAdapter(adapterOne, adapterTwo, adapterThree)
+        val concatAdapter = ConcatAdapter(adapterTop, adapterBalance, adapterFinances,
+            adapterTransfers, adapterDescription, adapterButton)
         recycler.adapter = concatAdapter
 
-        var infos = mutableListOf(
-            Pair("Nome", "Phillipi"),
-            Pair("Sobrenome", "Lino"),
-            Pair("Idade", "25"))
+        val balance = listOf(
+            BalanceItem("Saldo Disponível", 2350324324.12),
+            BalanceItem("Saldo anterior", 2350.12),
+            BalanceItem("Saldo atual", 2350.12),
+            BalanceItem("Limite (+)", 2350.12),
+            BalanceItem("Saldo bloqueado (-)", 2350.12),
+            BalanceItem("Valor bloqueado (-)", 2350.12),
+        )
 
-        adapterOne.loadItems(listOf("Título"), null)
-        adapterTwo.loadItems(infos, null)
-        adapterThree.loadItems(listOf("")) { _, _, _ ->
-            infos.add(Pair("Teste", "Adicionado com sucesso"))
-            adapterTwo.notifyItemInserted(infos.size - 1)
+        val finances = listOf(
+            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 2350.12),
+            FinancesItem("18/04/1995", "Fundos", "Resgate Parcial", 23501.12),
+            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 2350323.12),
+            FinancesItem("18/04/1995", "Fundos", "Resgate Total", 23502.12)
+        )
+
+        val transfers = listOf(
+            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", 128.99),
+            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", 128121.99),
+            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "", -1243.99),
+            TransferItem("18/04/1995", "TRANSF. MESMA TITULARIADADE", "Informações do TED D", -12328.99),
+            TransferItem("18/04/1995", "TRANSF. MESMA", "", 12318.99),
+            TransferItem("18/04/1995", "TRANSF. MESMA", "Informações do TED D", -12238.99)
+        )
+
+        val buttons = listOf(
+            "Juros Acumulado no Período",
+            "Taxa de Juros Efetivada (ao mês)"
+        )
+
+        adapterTop.init { _, item, _ ->
+            Log.d("RADIO_CLICKED", "$item dias")
+        }
+
+        adapterBalance.loadItems(balance, null)
+        adapterFinances.loadItems(finances, null)
+        adapterTransfers.loadItems(transfers, null)
+        adapterDescription.loadItems(listOf("Tarifa no valor de <b>R\$ 000,00</b>, cobrada pela disponibilização do limite de crédito, apurada de acordo com a normativa 4765 do Banco Central do Brasil ou conforme política de cobrança de tarifa da Instituição Financeira. "), null)
+        adapterButton.loadItems(buttons) { _, title, position ->
+            Log.d("BTN_CLICKED", title)
         }
     }
 }
 
-class ItemOneAdapter: BaseAdapter<String>() {
-    override fun getLayoutId(position: Int, obj: String) = R.layout.layout_item_one
-    override fun getViewHolder(view: View, viewType: Int) = ItemOneVH(view)
+fun View.setVisible(visible: Boolean = true) {
+    visibility = if (visible) VISIBLE else GONE
 }
-
-class ItemOneVH(view: View) : BaseVH<String>(view) {
-    override fun bind(item: String, position: Int, onItemPressed: ((View, String, Int) -> Unit)?) {
-        super.bind(item, position, onItemPressed)
-        view.txt_info.text = item
-    }
-}
-
-class ItemTwoAdapter: BaseAdapter<Pair<String, String>>() {
-    override fun getLayoutId(position: Int, obj: Pair<String, String>) = R.layout.layout_item_two
-    override fun getViewHolder(view: View, viewType: Int) = ItemTwoVH(view)
-}
-
-class ItemTwoVH(view: View) : BaseVH<Pair<String, String>>(view) {
-    override fun bind(item: Pair<String, String>, position: Int, onItemPressed: ((View, Pair<String, String>, Int) -> Unit)?) {
-        super.bind(item, position, onItemPressed)
-        view.txt_title.text = item.first
-        view.txt_info.text = item.second
-    }
-}
-
-class ItemThreeAdapter: BaseAdapter<String>() {
-    override fun getLayoutId(position: Int, obj: String) = R.layout.layout_item_three
-    override fun getViewHolder(view: View, viewType: Int) = ItemThreeVH(view)
-}
-
-class ItemThreeVH(view: View) : BaseVH<String>(view) {}

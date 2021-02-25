@@ -1,4 +1,4 @@
-package com.phillipilino.basehelpers.adapters
+package com.phillipilino.concatadapterexample
 
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +25,7 @@ abstract class BaseAdapter<T>: RecyclerView.Adapter<BaseVH<T>>() {
 
     abstract fun getViewHolder(view: View, viewType: Int): BaseVH<T>
 
-    fun loadItems(items: List<T>, onItemPressed: ((View, T, Int) -> Unit)?) {
+    open fun loadItems(items: List<T>, onItemPressed: ((View, T, Int) -> Unit)?) {
         this.items = items
         this.onItemPressed = onItemPressed
         notifyDataSetChanged()
